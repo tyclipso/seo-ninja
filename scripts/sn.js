@@ -28,7 +28,6 @@
 		sn.hostname = win.location.hostname.split('.').slice(-2).join('.');
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
-		sn.mixedProtocol = sn.protocol === 'http:' ? 'https:' : 'http:';
 		sn.scrollDuration = 1000;
 
 		/* wording */
@@ -270,7 +269,7 @@
 			$.ajax(
 			{
 				type: 'GET',
-				url: win.location.protocol + '//' + win.location.host + '/' + filename,
+				url: sn.protocol + '//' + sn.hostname + '/' + filename,
 				complete: function (xhr)
 				{
 					statusCode = xhr.statusCode();
@@ -319,7 +318,7 @@
 		sn.destroy = function ()
 		{
 			sn.body.find('div.js_sn_panel').add(sn.elements.css).add(sn.elements.js).remove();
-			delete win.dn;
+			delete win.sn;
 		};
 
 		/* @section 1.5 create panel */
@@ -327,13 +326,15 @@
 		sn.createPanel = function ()
 		{
 			sn.panel = sn.panel || {};
+			if (sn.body.find('div.js_sn_panel').length === 0) {	
+				/* append panel */
+	
+				sn.panel.body = $('<div class="js_sn_panel sn_panel"></div>').prependTo(sn.body);
+				sn.panel.title = $('<h1 class="js_sn_title_panel sn_title_panel" title="' + sn.version + '">' + sn.wording.title + '</h1>').appendTo(sn.panel.body);
+				sn.panel.list = $('<ul class="js_sn_list_panel sn_list_panel"></ul>').appendTo(sn.panel.body);
 
-			/* append panel */
-
-			sn.panel.body = $('<div class="js_sn_panel sn_panel"></div>').prependTo(sn.body);
-			sn.panel.title = $('<h1 class="js_sn_title_panel sn_title_panel" title="' + sn.version + '">' + sn.wording.title + '</h1>').appendTo(sn.panel.body);
-			sn.panel.list = $('<ul class="js_sn_list_panel sn_list_panel"></ul>').appendTo(sn.panel.body);
-
+			}
+			
 			/* scroll top */
 
 			sn.html.add(sn.body).animate(
