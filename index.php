@@ -1,3 +1,6 @@
+<?php 
+$url = '//' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,12 +11,12 @@
 		<meta name="description" content="SEO audit bookmarklet" />
 		<meta property="og:title" content="SEO Ninja - SEO audit bookmarklet" />
 		<meta property="og:description" content="SEO audit bookmarklet" />
-		<meta property="og:url" content="https://albrecht.demo.intern.tyclipso.net/seo-ninja/" />
+		<meta property="og:url" content="https:<?php echo $url; ?>" />
 		<meta name="robots" content="all" />
 		<meta name="viewport" content="width=device-width" />
 		<title>SEO Ninja - SEO audit bookmarklet</title>
 		<link type="text/css" href="styles/index_min.css" media="all" rel="stylesheet" />
-		<link rel="canonical" href="https://albrecht.demo.intern.tyclipso.net/seo-ninja/" />
+		<link rel="canonical" href="https:<?php echo $url; ?>" />
 	</head>
 
 	<!-- body -->
@@ -58,7 +61,7 @@
 						var loadSNScript = doc.createElement('script');
 
 						loadSNScript.type = 'text/javascript';
-						loadSNScript.src = '//albrecht.demo.intern.tyclipso.net/seo-ninja/scripts/sn.js';
+						loadSNScript.src = '<?php echo $url?>scripts/sn.js';
 						loadSNScript.id = 'sn_script';
 						doc.body.appendChild(loadSNScript);
 
@@ -67,7 +70,7 @@
 						var loadSNStyle = doc.createElement('link');
 
 						loadSNStyle.type = 'text/css';
-						loadSNStyle.href = '//albrecht.demo.intern.tyclipso.net/seo-ninja/styles/sn_min.css';
+						loadSNStyle.href = '<?php echo $url?>styles/sn_min.css';
 						loadSNStyle.media = 'all';
 						loadSNStyle.rel = 'stylesheet';
 						loadSNStyle.id = 'sn_style';
