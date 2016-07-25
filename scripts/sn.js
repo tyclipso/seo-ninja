@@ -4,12 +4,11 @@
  * 1. seo ninja
  *    1.1 calculate elements amount
  *    1.2 calculate file responses (sitemap, robots)
- *    1.3 calculate style sheets
- *    1.4 destroy panel
- *    1.5 create panel
- *    1.6 create items
- *    1.7 handle score
- *    1.8 init
+ *    1.3 destroy panel
+ *    1.4 create panel
+ *    1.5 create items
+ *    1.6 handle score
+ *    1.7 init
  */
 
 (function (doc, win, $)
@@ -24,7 +23,7 @@
 
 		/* misc */
 
-		sn.version = '1.0.0';
+		sn.version = '1.1.0';
 		sn.hostname = win.location.hostname.split('.').slice(-2).join('.');
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
@@ -38,6 +37,7 @@
 			close: 'Close',
 			types:
 			{
+				min: 'min.',
 				general: 'General',
 				ninja: 'Ninja',
 				trainee: 'Trainee',
@@ -139,22 +139,22 @@
 			{
 				elements: sn.html.find('h1'),
 				description: 'H1',
-				amountNinja: 1,
-				amountTrainee: 2,
-				amountNovice: 5
+				amountGeneral: 1
 			},
 			h2:
 			{
 				elements: sn.html.find('h2'),
 				description: 'H2',
+				amountMin: 1,
 				amountNinja: 2,
-				amountTrainee: 10,
-				amountNovice: 50
+				amountTrainee: 5,
+				amountNovice: 10
 			},
 			h3:
 			{
 				elements: sn.html.find('h3'),
 				description: 'H3',
+				amountMin: 1,
 				amountNinja: 10,
 				amountTrainee: 50,
 				amountNovice: 100
@@ -287,33 +287,7 @@
 			});
 		};
 
-		/* @section 1.3 calculate style sheets */
-
-		sn.calcStyleSheets = function ()
-		{
-			try
-			{
-				for (var i = 0; i < doc.styleSheets.length; i++)
-				{
-					var styleSheets = doc.styleSheets[i];
-
-					if (styleSheets && styleSheets.rules)
-					{
-						for (var j = 0; j < styleSheets.rules.length; j++)
-						{
-							var cssRules = styleSheets.rules[j],
-								selectorText = cssRules.selectorText,
-								cssText = cssRules.cssText;
-						}
-					}
-				}
-			}
-			catch (exception)
-			{
-			}
-		};
-
-		/* @section 1.4 destroy panel */
+		/* @section 1.3 destroy panel */
 
 		sn.destroy = function ()
 		{
@@ -321,7 +295,7 @@
 			delete win.sn;
 		};
 
-		/* @section 1.5 create panel */
+		/* @section 1.4 create panel */
 
 		sn.createPanel = function ()
 		{
@@ -360,7 +334,7 @@
 			});
 		};
 
-		/* @section 1.6 create items */
+		/* @section 1.5 create items */
 
 		sn.createItems = function ()
 		{
@@ -380,7 +354,9 @@
 
 					/* ninja */
 
-					if (sn.setup[i].amount <= sn.setup[i].amountNinja || sn.setup[i].amount === sn.setup[i].amountGeneral)
+					if ((sn.setup[i].amount <= sn.setup[i].amountNinja 
+						&& sn.setup[i].amount >= (sn.setup[i].amountMin || 0)) 
+						|| sn.setup[i].amount === sn.setup[i].amountGeneral)
 					{
 						sn.score++;
 						output += 'ninja';
@@ -390,7 +366,7 @@
 
 					else
 					{
-						if (sn.setup[i].amount <= sn.setup[i].amountTrainee)
+						if (sn.setup[i].amount <= sn.setup[i].amountTrainee && sn.setup[i].amount >= (sn.setup[i].amountMin || 0))
 						{
 							output += 'trainee';
 						}
@@ -421,6 +397,10 @@
 					}
 					else
 					{
+						if (sn.setup[i].amountMin > 0)
+						{
+							output += sn.wording.types.min + sn.wording.colon + ' ' + sn.setup[i].amountMin + ' '
+						}
 						output += sn.wording.types.ninja + sn.wording.colon + ' ' + sn.setup[i].amountNinja + ' ';
 						output += sn.wording.types.trainee + sn.wording.colon + ' ' + sn.setup[i].amountTrainee + ' ';
 						output += sn.wording.types.novice + sn.wording.colon + ' ' + sn.setup[i].amountNovice;
@@ -434,7 +414,7 @@
 			sn.panel.list.html(output);
 		};
 
-		/* @section 1.7 handle score */
+		/* @section 1.6 handle score */
 
 		sn.handleScore = function ()
 		{
@@ -477,14 +457,13 @@
 			sn.panel.body.addClass('sn_score_' + sn.type);
 		};
 
-		/* @section 1.8 init */
+		/* @section 1.7 init */
 
 		sn.init = function ()
 		{
 			sn.calcElementsAmount();
 			sn.calcFile('sitemap.xml', 'sitemapXML');
 			sn.calcFile('robots.txt', 'robotsTXT');
-			sn.calcStyleSheets();
 			sn.createPanel();
 			sn.createItems();
 			sn.handleScore();

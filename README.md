@@ -1,4 +1,5 @@
 ![SEO Ninja](https://dummyimage.com/1000x300/255A62/ffffff&text=SEO+Ninja)
+
 ![SEO audit bookmarklet](https://dummyimage.com/1000x100/255A62/ffffff&text=SEO+audit+bookmarklet)
 
 
