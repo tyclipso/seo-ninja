@@ -263,7 +263,8 @@
 
 		sn.calcFile = function (filename, setupVar)
 		{
-			var statusCode = '';
+			var statusCode = '',
+				contentLength = '';
 			/* request website */
 
 			$.ajax(
@@ -273,7 +274,8 @@
 				complete: function (xhr)
 				{
 					statusCode = xhr.statusCode();
-					if (statusCode['status'] === 200 && xhr.getResponseHeader('Content-Length'))
+					contentLength = xhr.getResponseHeader('Content-Length');
+					if (statusCode['status'] === 200 && (contentLength > 0 || contentLength === null))
 					{
 						sn.setup[setupVar].amount = 1;
 					}
