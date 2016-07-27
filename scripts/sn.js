@@ -23,8 +23,8 @@
 
 		/* misc */
 
-		sn.version = '1.1.0';
-		sn.hostname = win.location.hostname.split('.').slice(-2).join('.');
+		sn.version = '1.1.1';
+		sn.hostname = win.location.hostname;
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
 		sn.scrollDuration = 1000;
