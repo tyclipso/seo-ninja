@@ -2,6 +2,12 @@
 
 ![Changelog](https://dummyimage.com/1000x100/255A62/ffffff&text=Changelog)
 
+## 1.1.1 (2016-07-27)
+
+Bugfix:
+
+  - fixed sn.hostname
+
 ## 1.1.0 (2016-07-25)
 
 Features:
