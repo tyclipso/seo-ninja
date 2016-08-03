@@ -4,11 +4,12 @@
  * 1. seo ninja
  *    1.1 calculate elements amount
  *    1.2 calculate file responses (sitemap, robots)
- *    1.3 destroy panel
- *    1.4 create panel
- *    1.5 create items
- *    1.6 handle score
- *    1.7 init
+ *    1.3 calculate heading structure
+ *    1.4 destroy panel
+ *    1.5 create panel
+ *    1.6 create items
+ *    1.7 handle score
+ *    1.8 init
  */
 
 (function (doc, win, $)
@@ -23,7 +24,7 @@
 
 		/* misc */
 
-		sn.version = '1.1.1';
+		sn.version = '1.2.1';
 		sn.hostname = win.location.hostname;
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
@@ -159,6 +160,14 @@
 				amountTrainee: 50,
 				amountNovice: 100
 			},
+			wrongHeadingStructure:
+			{
+				elements: [],
+				description: 'Wrong Heading Structure',
+				amountNinja: 0,
+				amountTrainee: 5,
+				amountNovice: 10
+			},
 			emptyImgAltAttributes:
 			{
 				elements: sn.body.find('img:not([alt]),img[alt=""]'),
@@ -205,7 +214,7 @@
 			},
 			styleThirdParty:
 			{
-				elements: sn.html.find('link[rel="stylesheet"]').not('link[rel="stylesheet"][href*="' + sn.hostname + '"]').not(sn.elements.css),
+				elements: sn.html.find('link[rel="stylesheet"][href^="http"],link[rel="stylesheet"][href^="//"]').not('link[rel="stylesheet"][href*="' + sn.hostname + '"]').not(sn.elements.css),
 				description: 'Third Party styles',
 				amountNinja: 5,
 				amountTrainee: 10,
@@ -229,7 +238,7 @@
 			},
 			scriptThirdParty:
 			{
-				elements: sn.html.find('script[src]').not('script[src*="' + sn.hostname + '"]').not(sn.elements.js),
+				elements: sn.html.find('script[src^="http"],script[src^="//"]').not('script[src*="' + sn.hostname + '"]').not(sn.elements.js),
 				description: 'Third Party scripts',
 				amountNinja: 5,
 				amountTrainee: 10,
@@ -287,7 +296,23 @@
 			});
 		};
 
-		/* @section 1.3 destroy panel */
+		/* @section 1.3 calculate heading structure */
+
+		sn.calcHeadingStructure = function ()
+		{
+			var oldTagNumber = 0,
+			    wrongHeadingCounter = 0;
+			
+			$('h1,h2,h3,h4,h5,h6').each(function(index, element) {
+				var newTagNumber = parseInt(element.tagName.slice(1));
+				if (Math.abs(oldTagNumber - newTagNumber) > 1) {
+				    sn.setup.wrongHeadingStructure.elements.push(element);
+				    sn.setup.wrongHeadingStructure.amount++;
+				}
+			    oldTagNumber = newTagNumber;
+			});
+		}
+		/* @section 1.4 destroy panel */
 
 		sn.destroy = function ()
 		{
@@ -295,7 +320,7 @@
 			delete win.sn;
 		};
 
-		/* @section 1.4 create panel */
+		/* @section 1.5 create panel */
 
 		sn.createPanel = function ()
 		{
@@ -334,7 +359,7 @@
 			});
 		};
 
-		/* @section 1.5 create items */
+		/* @section 1.6 create items */
 
 		sn.createItems = function ()
 		{
@@ -414,7 +439,7 @@
 			sn.panel.list.html(output);
 		};
 
-		/* @section 1.6 handle score */
+		/* @section 1.7 handle score */
 
 		sn.handleScore = function ()
 		{
@@ -457,13 +482,14 @@
 			sn.panel.body.addClass('sn_score_' + sn.type);
 		};
 
-		/* @section 1.7 init */
+		/* @section 1.8 init */
 
 		sn.init = function ()
 		{
 			sn.calcElementsAmount();
 			sn.calcFile('sitemap.xml', 'sitemapXML');
 			sn.calcFile('robots.txt', 'robotsTXT');
+			sn.calcHeadingStructure();
 			sn.createPanel();
 			sn.createItems();
 			sn.handleScore();

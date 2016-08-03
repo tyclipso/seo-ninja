@@ -2,6 +2,18 @@
 
 ![Changelog](https://dummyimage.com/1000x100/255A62/ffffff&text=Changelog)
 
+## 1.2.1 (2016-08-03)
+
+Bugfix:
+
+  - selector for 3rd party scripts and styles now only points on elements starting with http or //
+
+## 1.2.0 (2016-07-28)
+
+Feature:
+
+  - check for wrong heading structure, e.g. h3 is following on h1
+  
 ## 1.1.1 (2016-07-27)
 
 Bugfix:
@@ -10,7 +22,7 @@ Bugfix:
 
 ## 1.1.0 (2016-07-25)
 
-Features:
+Feature:
 
   - define amountMin at every sn.setup Element, if not reached, level novice is set
 
