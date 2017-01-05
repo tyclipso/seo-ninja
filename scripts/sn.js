@@ -93,7 +93,7 @@
 			metaXRobots:
 			{
 				elements: [],
-				description: 'Meta- and X-Robots index',
+				description: 'Meta-Robots and X-Robots-Tag index',
 				amountGeneral: 1
 			},
 			metaDescription:

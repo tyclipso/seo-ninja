@@ -88,6 +88,7 @@ $url = '//' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 			<h2 class="title_footer">Audit criteria</h2>
 			<ol class="list_footer">
 				<li>Title tag</li>
+				<li>Meta-Robots and X-Robots-Tag index</li>
 				<li>Meta Description tag</li>
 				<li>Meta og:title property</li>
 				<li>Meta og:description property</li>
@@ -99,6 +100,7 @@ $url = '//' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 				<li>H1</li>
 				<li>H2</li>
 				<li>H3</li>
+				<li>Wrong Heading Structure</li>
 				<li>Empty image alt attributes</li>
 				<li>Empty link title attributes</li>
 				<li>sitemap.xml</li>
