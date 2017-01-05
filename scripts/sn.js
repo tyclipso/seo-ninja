@@ -1,22 +1,24 @@
 /**
  * @tableofcontents
  *
- * 1. seo ninja
+ * 1. seo ninja setup and calculations
  *    1.1 calculate elements amount
  *    1.2 calculate file responses (sitemap, robots)
  *    1.3 calculate heading structure
- *    1.4 destroy panel
- *    1.5 create panel
- *    1.6 create items
- *    1.7 handle score
- *    1.8 init
+ *    1.4 calculate meta- and x-robots
+ * 2. seo ninja panel initialisation
+ *    1.1 destroy panel
+ *    1.2 create panel
+ *    1.3 create items
+ *    1.4 handle score
+ *    1.5 init
  */
 
 (function (doc, win, $)
 {
 	'use strict';
 
-	/* @section 1. seo ninja */
+	/* @section 1. seo ninja setup and calculations */
 
 	$(function ()
 	{
@@ -24,7 +26,7 @@
 
 		/* misc */
 
-		sn.version = '1.2.1';
+		sn.version = '1.3.0';
 		sn.hostname = win.location.hostname;
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
@@ -86,6 +88,12 @@
 			{
 				elements: sn.head.find('title'),
 				description: 'Title tag',
+				amountGeneral: 1
+			},
+			metaXRobots:
+			{
+				elements: [],
+				description: 'Meta- and X-Robots index',
 				amountGeneral: 1
 			},
 			metaDescription:
@@ -312,7 +320,42 @@
 			    oldTagNumber = newTagNumber;
 			});
 		}
-		/* @section 1.4 destroy panel */
+		
+		/* @section 1.4 calculate robots (meta-robots an x-robots */
+		
+		sn.calcRobots = function ()
+		{
+			var xRobots = '',
+				metaRobots = '';
+			/* request website */
+
+			$.ajax(
+			{
+				type: 'GET',
+				url: window.location.href,
+				complete: function (xhr)
+				{
+					xRobots = xhr.getResponseHeader('X-Robots-Tag');
+					metaRobots = sn.head.find('meta[name="robots"]');
+					// check for correct meta- and x-robots
+					if ((xRobots === null || (xRobots != null && xRobots.indexOf('noindex')) === -1)
+						&& (metaRobots.length === 0 || (metaRobots.length && metaRobots.attr('content').indexOf('noindex') === -1))
+					) {
+						sn.setup.metaXRobots.amount = 1;
+					}
+
+					/* refresh items and score */
+
+					sn.panel.list.empty();
+					sn.createItems();
+					sn.handleScore();
+				}
+			});
+		};
+		
+		/* @section 2. seo ninja panel initialisation */
+		
+		/* @section 2.1 destroy panel */
 
 		sn.destroy = function ()
 		{
@@ -320,7 +363,7 @@
 			delete win.sn;
 		};
 
-		/* @section 1.5 create panel */
+		/* @section 2.2 create panel */
 
 		sn.createPanel = function ()
 		{
@@ -359,7 +402,7 @@
 			});
 		};
 
-		/* @section 1.6 create items */
+		/* @section 2.3 create items */
 
 		sn.createItems = function ()
 		{
@@ -404,6 +447,7 @@
 
 						if (typeof win.console === 'object' && sn.setup[i].elements && !sn.setup[i].console)
 						{
+							if (i === 'metaXRobots') {win.console.log(sn.setup[i].elements.length);}
 							win.console.warn(sn.setup[i].description);
 							if (sn.setup[i].elements.length)
 							{
@@ -439,7 +483,7 @@
 			sn.panel.list.html(output);
 		};
 
-		/* @section 1.7 handle score */
+		/* @section 2.4 handle score */
 
 		sn.handleScore = function ()
 		{
@@ -482,7 +526,7 @@
 			sn.panel.body.addClass('sn_score_' + sn.type);
 		};
 
-		/* @section 1.8 init */
+		/* @section 2.5 init */
 
 		sn.init = function ()
 		{
@@ -490,6 +534,7 @@
 			sn.calcFile('sitemap.xml', 'sitemapXML');
 			sn.calcFile('robots.txt', 'robotsTXT');
 			sn.calcHeadingStructure();
+			sn.calcRobots();
 			sn.createPanel();
 			sn.createItems();
 			sn.handleScore();

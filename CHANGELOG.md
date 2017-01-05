@@ -2,6 +2,12 @@
 
 ![Changelog](https://dummyimage.com/1000x100/255A62/ffffff&text=Changelog)
 
+## 1.3.0 (2017-01-05)
+
+Feature:
+
+  - check if current site is ready for SERP indexing (including Meta-Robots and X-Robots-Tag)
+
 ## 1.2.1 (2016-08-03)
 
 Bugfix:
