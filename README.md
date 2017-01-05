@@ -20,6 +20,7 @@ Audit criteria
 
 <ol>
 	<li>Title tag</li>
+	<li>Meta-Robots and X-Robots-Tag index</li>
 	<li>Meta Description tag</li>
 	<li>Meta og:title property</li>
 	<li>Meta og:description property</li>
@@ -31,6 +32,7 @@ Audit criteria
 	<li>H1</li>
 	<li>H2</li>
 	<li>H3</li>
+	<li>Wrong Heading Structure</li>
 	<li>Empty image alt attributes</li>
 	<li>Empty link title attributes</li>
 	<li>sitemap.xml</li>
