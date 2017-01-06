@@ -2,6 +2,12 @@
 
 ![Changelog](https://dummyimage.com/1000x100/255A62/ffffff&text=Changelog)
 
+## 1.3.1 (2017-01-06)
+
+Bugfix:
+
+  - breaking css columns inside of column elements prevented
+  
 ## 1.3.0 (2017-01-05)
 
 Feature:

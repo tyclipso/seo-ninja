@@ -26,7 +26,7 @@
 
 		/* misc */
 
-		sn.version = '1.3.0';
+		sn.version = '1.3.1';
 		sn.hostname = win.location.hostname;
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
