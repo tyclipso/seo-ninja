@@ -6,7 +6,7 @@
 
 Bugfix:
 
-  - Breaking columns inside of column elements prevented
+  - breaking css-columns inside of column elements prevented
   
 ## 1.3.0 (2017-01-05)
 
