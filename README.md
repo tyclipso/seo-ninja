@@ -12,7 +12,7 @@ SEO Ninja
 Install
 -------
 
-Drop bookmarklet link to your bookmarks bar.
+Go to [this site](https://updates.tyclipso.net/bookmarklets/seo-ninja/) and drop bookmarklet link to your bookmarks bar.
 
 
 Audit criteria
