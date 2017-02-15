@@ -2,7 +2,7 @@
 
 ![Changelog](https://dummyimage.com/1000x100/255A62/ffffff&text=Changelog)
 
-## 1.3.1 (2017-01-06)
+## 1.3.2 (2017-02-15)
 
 Bugfix:
 
