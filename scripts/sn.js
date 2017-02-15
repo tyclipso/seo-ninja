@@ -128,8 +128,8 @@
 			},
 			metaTwitterCard:
 			{
-				elements: sn.head.find('meta[property="twitter:card"]'),
-				description: 'Meta twitter:card property',
+				elements: sn.head.find('meta[name="twitter:card"]'),
+				description: 'Meta twitter:card tag',
 				amountGeneral: 1
 			},
 			canonicalURL:

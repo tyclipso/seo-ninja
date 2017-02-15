@@ -94,7 +94,7 @@ $url = '//' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 				<li>Meta og:description property</li>
 				<li>Meta og:image property</li>
 				<li>Meta og:url property</li>
-				<li>Meta twitter:card property</li>
+				<li>Meta twitter:card tag</li>
 				<li>Canonical URL</li>
 				<li>Favicon</li>
 				<li>H1</li>
