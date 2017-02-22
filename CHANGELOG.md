@@ -2,6 +2,12 @@
 
 ![Changelog](https://dummyimage.com/1000x100/255A62/ffffff&text=Changelog)
 
+## 1.3.3 (2017-02-22)
+
+Improvement:
+
+  - headlines in article sections are not used for calculation of h1, h2, h3
+
 ## 1.3.2 (2017-02-15)
 
 Bugfix:

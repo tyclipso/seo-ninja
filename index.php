@@ -29,7 +29,7 @@ $url = '//' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 
 			<h1 class="title_content">SEO Ninja</h1>
 			<div class="box_content">
-				SEO audit bookmarklet by Albrecht Mauersberger
+				SEO audit bookmarklet by tyclipso.net
 			</div>
 
 			<a class="link_drag" href=

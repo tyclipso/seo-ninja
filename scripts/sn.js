@@ -26,7 +26,7 @@
 
 		/* misc */
 
-		sn.version = '1.3.2';
+		sn.version = '1.3.3';
 		sn.hostname = win.location.hostname;
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
@@ -146,13 +146,13 @@
 			},
 			h1:
 			{
-				elements: sn.html.find('h1'),
+				elements: sn.html.find('h1').not('article h1'),
 				description: 'H1',
 				amountGeneral: 1
 			},
 			h2:
 			{
-				elements: sn.html.find('h2'),
+				elements: sn.html.find('h2').not('article h2'),
 				description: 'H2',
 				amountMin: 1,
 				amountNinja: 2,
@@ -161,7 +161,7 @@
 			},
 			h3:
 			{
-				elements: sn.html.find('h3'),
+				elements: sn.html.find('h3').not('article h3'),
 				description: 'H3',
 				amountMin: 1,
 				amountNinja: 10,
