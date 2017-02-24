@@ -26,7 +26,7 @@
 
 		/* misc */
 
-		sn.version = '1.3.3';
+		sn.version = '1.3.4';
 		sn.hostname = win.location.hostname;
 		sn.protocol = win.location.protocol;
 		sn.timing = win.performance.timing;
@@ -277,29 +277,72 @@
 
 		/* @section 1.2 calculate file responses (sitemap, robots) */
 
-		sn.calcFile = function (filename, setupVar)
+		sn.calcFiles = function ()
 		{
-			var statusCode = '',
-				contentLength = '';
-			/* request website */
-
-			$.ajax(
-			{
-				type: 'GET',
-				url: sn.protocol + '//' + sn.hostname + '/' + filename,
-				complete: function (xhr)
-				{
-					statusCode = xhr.statusCode();
-					contentLength = xhr.getResponseHeader('Content-Length');
-					if (statusCode['status'] === 200 && (contentLength > 0 || contentLength === null))
-					{
-						sn.setup[setupVar].amount = 1;
+			var files = {
+					sitemap: {
+						filename: 'sitemap.xml',
+						setupVar: 'sitemapXML'
+					},
+					robots: {
+						filename: 'robots.txt',
+						setupVar: 'robotsTXT'
+					},
+					favicon: {
+						filename: 'favicon.ico',
+						setupVar: 'favIcon'
 					}
-					/* refresh items and score */
+				},
+				status = '',
+				contentLength = '';			
 
-					sn.panel.list.empty();
-					sn.createItems();
-					sn.handleScore();
+			$.each(files, function(index, file) {
+				// Only request favicon if not already found in header
+				if ($.inArray(index, ['sitemap', 'robots']) || (index == 'favicon' && sn.setup.favIcon.amount == 0)) {
+					/* request website */
+					$.ajax({
+						type: 'GET',
+						url: sn.protocol + '//' + sn.hostname + '/' + file.filename,
+						complete: function (xhr)
+						{
+							status = xhr.status;
+							contentLength = xhr.getResponseHeader('Content-Length');
+							if (status === 200 && (contentLength > 0 || contentLength === null)) {
+								sn.setup[file.setupVar].amount = 1;
+								
+								// special case: no sitemap.xml, check for sitemap.xml in robots.txt
+								if (sn.setup.robotsTXT.amount == 1 && sn.setup.sitemapXML.amount == 0) {
+									var robotsSitemap = xhr.responseText.match(/Sitemap: ([^\s]+)/);
+									if (robotsSitemap != null) {
+										$.ajax({
+											type: 'GET',
+											url: robotsSitemap[1],
+											complete: function (xhr)
+											{
+												status = xhr.status;
+												contentLength = xhr.getResponseHeader('Content-Length');
+												if (status === 200 && (contentLength > 0 || contentLength === null)) {
+													sn.setup.sitemapXML.amount = 1;
+												}
+												
+												/* refresh items and score */
+	
+												sn.panel.list.empty();
+												sn.createItems();
+												sn.handleScore();
+											}
+										});
+									}
+								}
+							}
+							
+							/* refresh items and score */
+	
+							sn.panel.list.empty();
+							sn.createItems();
+							sn.handleScore();
+						}
+					});
 				}
 			});
 		};
@@ -321,7 +364,7 @@
 			});
 		}
 		
-		/* @section 1.4 calculate robots (meta-robots an x-robots */
+		/* @section 1.4 calculate robots (meta-robots and x-robots */
 		
 		sn.calcRobots = function ()
 		{
@@ -531,9 +574,8 @@
 		sn.init = function ()
 		{
 			sn.calcElementsAmount();
-			sn.calcFile('sitemap.xml', 'sitemapXML');
-			sn.calcFile('robots.txt', 'robotsTXT');
 			sn.calcHeadingStructure();
+			sn.calcFiles();
 			sn.calcRobots();
 			sn.createPanel();
 			sn.createItems();

@@ -2,6 +2,13 @@
 
 ![Changelog](https://dummyimage.com/1000x100/255A62/ffffff&text=Changelog)
 
+## 1.3.4 (2017-02-23)
+
+Improvements:
+
+  - sitemap.xml is now recognized when set via robots.txt, too
+  - favicon.ico is now recognized when located in the web site root folder, too
+
 ## 1.3.3 (2017-02-22)
 
 Improvement:
