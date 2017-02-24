@@ -490,7 +490,6 @@
 
 						if (typeof win.console === 'object' && sn.setup[i].elements && !sn.setup[i].console)
 						{
-							if (i === 'metaXRobots') {win.console.log(sn.setup[i].elements.length);}
 							win.console.warn(sn.setup[i].description);
 							if (sn.setup[i].elements.length)
 							{
