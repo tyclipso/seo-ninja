@@ -298,7 +298,7 @@
 
 			$.each(files, function(index, file) {
 				// Only request favicon if not already found in header
-				if ($.inArray(index, ['sitemap', 'robots']) || (index == 'favicon' && sn.setup.favIcon.amount == 0)) {
+				if ($.inArray(index, ['sitemap', 'robots']) != -1 || (index == 'favicon' && sn.setup.favIcon.amount == 0)) {
 					/* request website */
 					$.ajax({
 						type: 'GET',
